@@ -7,6 +7,7 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // Отслеживание прокрутки страницы
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
@@ -16,26 +17,22 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Toggle menu and control body scroll
+  // Переключение меню и блокировка прокрутки тела
   const toggleMenu = () => {
     const newMenuState = !isMenuOpen;
     setIsMenuOpen(newMenuState);
     
-    // Block body scroll when menu is open
-    if (newMenuState) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    // Блокировка прокрутки при открытом меню
+    document.body.style.overflow = newMenuState ? 'hidden' : '';
   };
 
-  // Close menu when clicking a link
+  // Закрытие меню при клике на ссылку
   const closeMenu = () => {
     setIsMenuOpen(false);
     document.body.style.overflow = '';
   };
 
-  // Ensure body scroll is restored when component unmounts
+  // Восстановление прокрутки при размонтировании компонента
   useEffect(() => {
     return () => {
       document.body.style.overflow = '';
@@ -53,7 +50,7 @@ const Header = () => {
           University History
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* Десктопная навигация */}
         <nav className="hidden md:flex items-center space-x-8">
           <Link to="/" className="nav-link">Главная</Link>
           <Link to="/landmarks" className="nav-link">Достопримечательности</Link>
@@ -61,24 +58,25 @@ const Header = () => {
           <Link to="/media-archive" className="nav-link">Медиа архив</Link>
         </nav>
 
-        {/* Mobile Menu Button */}
+        {/* Кнопка мобильного меню (всегда видима) */}
         <button 
-          className="md:hidden flex items-center text-gray-900 z-60"
+          className="md:hidden flex items-center text-gray-900 z-50"
           onClick={toggleMenu}
-          aria-label="Toggle menu"
+          aria-label="Переключить меню"
         >
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Мобильная навигация - полностью отдельный компонент */}
       <div 
         className={`
           fixed inset-0 bg-white z-40 
-          transform transition-all duration-300 ease-in-out md:hidden overflow-y-auto
+          transform transition-all duration-300 ease-in-out md:hidden
           ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}
-          flex flex-col pt-24 px-6
+          flex flex-col pt-24 px-6 overflow-y-auto
         `}
+        style={{ top: 0 }} // Гарантируем, что начало меню всегда в верхней части экрана
       >
         <nav className="flex flex-col space-y-4 w-full">
           <Link 
