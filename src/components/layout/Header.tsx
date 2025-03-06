@@ -16,10 +16,31 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  // Toggle menu and control body scroll
+  const toggleMenu = () => {
+    const newMenuState = !isMenuOpen;
+    setIsMenuOpen(newMenuState);
+    
+    // Block body scroll when menu is open
+    if (newMenuState) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  };
 
   // Close menu when clicking a link
-  const closeMenu = () => setIsMenuOpen(false);
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+    document.body.style.overflow = '';
+  };
+
+  // Ensure body scroll is restored when component unmounts
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
 
   return (
     <header 
@@ -54,7 +75,7 @@ const Header = () => {
       <div 
         className={`
           fixed inset-0 bg-gradient-to-b from-white to-white/95 backdrop-blur-sm z-40 
-          transform transition-all duration-300 ease-in-out md:hidden
+          transform transition-all duration-300 ease-in-out md:hidden overflow-y-auto
           ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}
           flex flex-col pt-24 px-6
         `}
