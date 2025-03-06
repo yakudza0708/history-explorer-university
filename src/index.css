@@ -117,4 +117,8 @@
   .nav-link:hover::after {
     @apply w-full;
   }
+  
+  .mobile-nav-link {
+    @apply flex items-center justify-between py-3 border-b border-gray-100 text-foreground transition-colors hover:text-primary;
+  }
 }

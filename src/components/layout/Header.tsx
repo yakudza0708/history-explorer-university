@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronRight } from 'lucide-react';
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -17,6 +17,9 @@ const Header = () => {
   }, []);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  // Close menu when clicking a link
+  const closeMenu = () => setIsMenuOpen(false);
 
   return (
     <header 
@@ -39,7 +42,7 @@ const Header = () => {
 
         {/* Mobile Menu Button */}
         <button 
-          className="md:hidden flex items-center text-gray-900"
+          className="md:hidden flex items-center text-gray-900 z-60"
           onClick={toggleMenu}
           aria-label="Toggle menu"
         >
@@ -47,43 +50,63 @@ const Header = () => {
         </button>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Navigation - Improved version */}
       <div 
         className={`
-          fixed inset-0 bg-white z-40 pt-20 px-6 transform transition-transform duration-300 ease-in-out md:hidden
+          fixed inset-0 bg-gradient-to-b from-white to-white/95 backdrop-blur-sm z-40 
+          transform transition-all duration-300 ease-in-out md:hidden
           ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}
+          flex flex-col pt-24 px-6
         `}
       >
-        <nav className="flex flex-col space-y-6">
+        <nav className="flex flex-col space-y-4 w-full">
           <Link 
             to="/" 
-            className="text-xl py-2 border-b border-gray-100"
-            onClick={() => setIsMenuOpen(false)}
+            className="mobile-nav-link"
+            onClick={closeMenu}
           >
-            Главная
+            <span className="text-xl font-medium">Главная</span>
+            <ChevronRight size={18} className="text-primary/70" />
           </Link>
+          
           <Link 
             to="/landmarks" 
-            className="text-xl py-2 border-b border-gray-100"
-            onClick={() => setIsMenuOpen(false)}
+            className="mobile-nav-link"
+            onClick={closeMenu}
           >
-            Достопримечательности
+            <span className="text-xl font-medium">Достопримечательности</span>
+            <ChevronRight size={18} className="text-primary/70" />
           </Link>
+          
           <Link 
             to="/people" 
-            className="text-xl py-2 border-b border-gray-100"
-            onClick={() => setIsMenuOpen(false)}
+            className="mobile-nav-link"
+            onClick={closeMenu}
           >
-            Выдающиеся личности
+            <span className="text-xl font-medium">Выдающиеся личности</span>
+            <ChevronRight size={18} className="text-primary/70" />
           </Link>
+          
           <Link 
             to="/media-archive" 
-            className="text-xl py-2 border-b border-gray-100"
-            onClick={() => setIsMenuOpen(false)}
+            className="mobile-nav-link"
+            onClick={closeMenu}
           >
-            Медиа архив
+            <span className="text-xl font-medium">Медиа архив</span>
+            <ChevronRight size={18} className="text-primary/70" />
           </Link>
         </nav>
+        
+        <div className="mt-auto mb-12 pt-8">
+          <div className="w-24 h-1 bg-gray-200 rounded-full mx-auto mb-8"></div>
+          <Link
+            to="/"
+            onClick={closeMenu}
+            className="block w-full py-3 px-6 bg-primary text-white rounded-lg text-center font-medium transition-transform hover:scale-[1.02] active:scale-[0.98]"
+          >
+            Начать тур
+          </Link>
+        </div>
       </div>
     </header>
   );
