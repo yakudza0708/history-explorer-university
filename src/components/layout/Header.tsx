@@ -71,7 +71,7 @@ const Header = () => {
         </button>
       </div>
 
-      {/* Mobile Navigation - Improved version */}
+      {/* Mobile Navigation */}
       <div 
         className={`
           fixed inset-0 bg-gradient-to-b from-white to-white/95 backdrop-blur-sm z-40 
@@ -117,17 +117,6 @@ const Header = () => {
             <ChevronRight size={18} className="text-primary/70" />
           </Link>
         </nav>
-        
-        <div className="mt-auto mb-12 pt-8">
-          <div className="w-24 h-1 bg-gray-200 rounded-full mx-auto mb-8"></div>
-          <Link
-            to="/"
-            onClick={closeMenu}
-            className="block w-full py-3 px-6 bg-primary text-white rounded-lg text-center font-medium transition-transform hover:scale-[1.02] active:scale-[0.98]"
-          >
-            Начать тур
-          </Link>
-        </div>
       </div>
     </header>
   );
