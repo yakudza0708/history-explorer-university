@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, ChevronRight } from 'lucide-react';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -58,7 +59,7 @@ const Header = () => {
           <Link to="/media-archive" className="nav-link">Медиа архив</Link>
         </nav>
 
-        {/* Кнопка мобильного меню (всегда видима) */}
+        {/* Кнопка мобильного меню */}
         <button 
           className="md:hidden flex items-center text-gray-900 z-50"
           onClick={toggleMenu}
@@ -68,54 +69,68 @@ const Header = () => {
         </button>
       </div>
 
-      {/* Мобильная навигация - полностью отдельный компонент */}
-      <div 
-        className={`
-          fixed inset-0 bg-white z-40 
-          transform transition-all duration-300 ease-in-out md:hidden
-          ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}
-          flex flex-col pt-24 px-6 overflow-y-auto
-        `}
-        style={{ top: 0 }} // Гарантируем, что начало меню всегда в верхней части экрана
-      >
-        <nav className="flex flex-col space-y-4 w-full">
-          <Link 
-            to="/" 
-            className="mobile-nav-link"
-            onClick={closeMenu}
-          >
-            <span className="text-xl font-medium">Главная</span>
-            <ChevronRight size={18} className="text-primary/70" />
-          </Link>
-          
-          <Link 
-            to="/landmarks" 
-            className="mobile-nav-link"
-            onClick={closeMenu}
-          >
-            <span className="text-xl font-medium">Достопримечательности</span>
-            <ChevronRight size={18} className="text-primary/70" />
-          </Link>
-          
-          <Link 
-            to="/people" 
-            className="mobile-nav-link"
-            onClick={closeMenu}
-          >
-            <span className="text-xl font-medium">Выдающиеся личности</span>
-            <ChevronRight size={18} className="text-primary/70" />
-          </Link>
-          
-          <Link 
-            to="/media-archive" 
-            className="mobile-nav-link"
-            onClick={closeMenu}
-          >
-            <span className="text-xl font-medium">Медиа архив</span>
-            <ChevronRight size={18} className="text-primary/70" />
-          </Link>
-        </nav>
-      </div>
+      {/* Новое мобильное меню с использованием Tabs из shadcn/ui */}
+      {isMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-white z-40 md:hidden"
+          style={{ top: '0', bottom: '0', left: '0', right: '0' }}
+        >
+          <div className="flex flex-col h-full pt-20 pb-6 px-6">
+            <div className="text-2xl font-serif font-medium mb-8">Меню</div>
+            
+            <nav className="flex-1">
+              <Tabs defaultValue="main" className="w-full">
+                <TabsList className="w-full grid grid-cols-2 mb-6">
+                  <TabsTrigger value="main">Основное</TabsTrigger>
+                  <TabsTrigger value="more">Дополнительно</TabsTrigger>
+                </TabsList>
+                
+                <div className="space-y-2">
+                  <Link 
+                    to="/" 
+                    className="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors"
+                    onClick={closeMenu}
+                  >
+                    <span className="text-lg">Главная</span>
+                    <ChevronRight size={18} />
+                  </Link>
+                  
+                  <Link 
+                    to="/landmarks" 
+                    className="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors"
+                    onClick={closeMenu}
+                  >
+                    <span className="text-lg">Достопримечательности</span>
+                    <ChevronRight size={18} />
+                  </Link>
+                  
+                  <Link 
+                    to="/people" 
+                    className="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors"
+                    onClick={closeMenu}
+                  >
+                    <span className="text-lg">Выдающиеся личности</span>
+                    <ChevronRight size={18} />
+                  </Link>
+                  
+                  <Link 
+                    to="/media-archive" 
+                    className="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors"
+                    onClick={closeMenu}
+                  >
+                    <span className="text-lg">Медиа архив</span>
+                    <ChevronRight size={18} />
+                  </Link>
+                </div>
+              </Tabs>
+            </nav>
+            
+            <div className="mt-auto pt-6 border-t border-gray-100">
+              <div className="text-sm text-gray-500">© 2023 University History</div>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 };
