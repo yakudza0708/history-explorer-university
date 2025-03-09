@@ -1,0 +1,59 @@
+
+.nav-link {
+  @apply relative text-foreground hover:text-primary transition-colors;
+}
+
+.nav-link::after {
+  content: "";
+  @apply absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300;
+}
+
+.nav-link:hover::after {
+  @apply w-full;
+}
+
+.mobile-nav-link {
+  @apply flex items-center justify-between py-3 border-b border-gray-100 text-foreground transition-colors hover:text-primary;
+}
+
+.timeline-item {
+  @apply relative pl-10 pb-10 border-l border-muted;
+}
+
+.timeline-item::before {
+  content: "";
+  @apply absolute w-3 h-3 bg-primary rounded-full top-2 -left-[6.5px];
+}
+
+.timeline-date {
+  @apply font-serif text-lg font-medium mb-2;
+}
+
+.timeline-content {
+  @apply transition-all duration-300;
+}
+
+.photo-overlay {
+  @apply absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 transition-opacity duration-300 flex items-end p-6;
+}
+
+.photo-card:hover .photo-overlay {
+  @apply opacity-100;
+}
+
+.glass-card {
+  @apply backdrop-blur-md bg-white/80 border border-white/30 shadow-lg rounded-xl transition-all duration-300;
+}
+
+.dark-glass-card {
+  @apply backdrop-blur-md bg-black/20 border border-white/10 shadow-lg rounded-xl;
+}
+
+.neo-card {
+  @apply bg-white rounded-xl shadow-[5px_5px_15px_rgba(0,0,0,0.1),-5px_-5px_15px_rgba(255,255,255,0.7)];
+}
+
+.blur-backdrop {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}

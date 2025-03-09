@@ -1,0 +1,16 @@
+
+.section-title {
+  @apply font-serif text-3xl md:text-4xl lg:text-5xl font-semibold mb-4;
+}
+
+.section-subtitle {
+  @apply font-light text-lg text-muted-foreground max-w-3xl mb-12;
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600;
+}
+
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r;
+}

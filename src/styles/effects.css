@@ -1,0 +1,80 @@
+
+.transform-hover {
+  @apply transition-transform duration-500;
+}
+
+.transform-hover:hover {
+  @apply scale-[1.03];
+}
+
+.hover-lift {
+  @apply transition-all duration-300;
+}
+
+.hover-lift:hover {
+  @apply -translate-y-2 shadow-lg;
+}
+
+.hover-expand {
+  @apply transition-all duration-300;
+}
+
+.hover-expand:hover {
+  @apply scale-105;
+}
+
+.hover-glow {
+  @apply transition-all duration-300;
+}
+
+.hover-glow:hover {
+  @apply shadow-[0_0_15px_rgba(59,130,246,0.5)];
+}
+
+.card-hover {
+  @apply relative transition-all duration-300 overflow-hidden;
+}
+
+.card-hover::before {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/0 to-purple-500/0 opacity-0 transition-opacity duration-300;
+}
+
+.card-hover:hover::before {
+  @apply opacity-10;
+}
+
+.card-hover::after {
+  content: '';
+  @apply absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300;
+}
+
+.card-hover:hover::after {
+  @apply w-full;
+}
+
+.animated-bg {
+  @apply relative overflow-hidden;
+}
+
+.animated-bg::before {
+  content: "";
+  @apply absolute -inset-[100px] bg-gradient-radial from-blue-500/20 to-transparent blur-3xl opacity-30 animate-blob;
+}
+
+.animated-bg::after {
+  content: "";
+  @apply absolute -inset-[100px] bg-gradient-radial from-purple-500/20 to-transparent blur-3xl opacity-30 animate-blob;
+  animation-delay: 3s;
+}
+
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
