@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useRef } from 'react';
-import { ArrowDown, Sparkles } from 'lucide-react';
+import { ArrowDown, Sparkles, Star } from 'lucide-react';
 
 const slides = [
   {
@@ -28,6 +28,7 @@ const Hero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const heroRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState(0);
   
   useEffect(() => {
     const interval = setInterval(() => {
@@ -49,8 +50,17 @@ const Hero = () => {
       }
     };
 
+    const handleScroll = () => {
+      setScrollPosition(window.scrollY);
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const scrollToContent = () => {
@@ -63,9 +73,21 @@ const Hero = () => {
   // Параллакс эффект для фона
   const getParallaxStyle = (depth: number) => {
     return {
-      transform: `translate(${mousePosition.x * depth * -10}px, ${mousePosition.y * depth * -10}px)`
+      transform: `translate(${mousePosition.x * depth * -10}px, ${mousePosition.y * depth * -10}px) scale(${1 + scrollPosition * 0.0002})`,
+      opacity: 1 - scrollPosition * 0.001
     };
   };
+
+  // Добавляем частицы для футуристичного эффекта
+  const particles = Array.from({ length: 15 }, (_, i) => ({
+    id: i,
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    size: 1 + Math.random() * 2,
+    blur: Math.random() > 0.5,
+    delay: Math.random() * 3,
+    duration: 10 + Math.random() * 20
+  }));
 
   return (
     <div ref={heroRef} className="relative h-screen overflow-hidden">
@@ -85,6 +107,29 @@ const Hero = () => {
         ></div>
       </div>
       
+      {/* Футуристичные частицы */}
+      <div className="absolute inset-0 z-10 pointer-events-none">
+        {particles.map(particle => (
+          <div 
+            key={particle.id}
+            className={`absolute rounded-full ${particle.blur ? 'bg-blue-400/30 blur-sm' : 'bg-white'} animate-float`}
+            style={{
+              left: `${particle.x}%`,
+              top: `${particle.y}%`,
+              width: `${particle.size}px`,
+              height: `${particle.size}px`,
+              animation: `float ${particle.duration}s ease-in-out infinite`,
+              animationDelay: `${particle.delay}s`,
+              opacity: 0.7
+            }}
+          ></div>
+        ))}
+      </div>
+      
+      {/* Сетка для футуристичного эффекта */}
+      <div className="absolute inset-0 bg-grid-white/5 opacity-20 z-10 pointer-events-none" 
+        style={{ transform: `translate(${mousePosition.x * 5}px, ${mousePosition.y * 5}px)` }}></div>
+      
       {/* Background slides с параллакс эффектом */}
       {slides.map((slide, index) => (
         <div
@@ -100,12 +145,12 @@ const Hero = () => {
               ...getParallaxStyle(0.5)
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
         </div>
       ))}
       
       {/* Content с анимацией */}
-      <div className="relative h-full flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+      <div className="relative h-full flex flex-col items-center justify-center text-center px-4 overflow-hidden z-20">
         <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <span className="inline-block font-sans text-sm md:text-base uppercase tracking-wider text-white/80 mb-4 border-b pb-2 relative overflow-hidden group">
             <div className="flex items-center gap-2">
@@ -113,50 +158,58 @@ const Hero = () => {
               <span>Виртуальный тур</span>
               <Sparkles className="w-4 h-4 text-blue-400 animate-pulse-slow" style={{ animationDelay: '1s' }} />
             </div>
-            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-blue-500 to-purple-500"></span>
+            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 animate-shimmer"></span>
           </span>
           
-          <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl text-white font-bold mb-6 max-w-4xl mx-auto relative">
+          <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold mb-6 max-w-4xl mx-auto relative">
             <span className="relative inline-block overflow-hidden">
-              <span className="gradient-text from-white via-white/90 to-white/70">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-50/90 to-purple-50/80 animate-gradient-x">
                 {slides[currentSlide].title}
               </span>
-              <span className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500 transform origin-left transition-transform duration-1000 scale-x-0" style={{ transform: 'scaleX(1)' }}></span>
+              <span className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500 animate-gradient-x"></span>
             </span>
           </h1>
           
-          <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-8 animate-fade-up" style={{ animationDelay: '300ms' }}>
+          <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-8 animate-fade-in" style={{ animationDelay: '300ms' }}>
             {slides[currentSlide].subtitle}
           </p>
           
           <button 
-            className="px-8 py-3 bg-white/10 text-white rounded-full font-medium relative group overflow-hidden backdrop-blur-sm transition-all duration-300 border border-white/20 hover:bg-white/20"
+            className="px-8 py-3 relative group overflow-hidden rounded-lg border border-white/20 hover-lift"
             onClick={scrollToContent}
           >
-            <span className="relative z-10">Начать тур</span>
-            <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-600/80 to-purple-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-glass"></span>
+            <span className="absolute inset-0 w-full h-full bg-black/30 backdrop-blur-md group-hover:backdrop-blur-lg transition-all duration-500"></span>
+            <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-transparent via-white/5 to-white/10"></span>
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-400 group-hover:w-full transition-all duration-500"></span>
+            <span className="relative z-10 text-white flex items-center gap-2">
+              <span>Начать тур</span>
+              <Star className="w-4 h-4 animate-pulse" />
+            </span>
           </button>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce transition-all duration-300 hover:scale-110">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce transition-all duration-300 hover:scale-110 z-20">
           <button 
             onClick={scrollToContent}
             aria-label="Scroll down" 
-            className="text-white opacity-80 hover:opacity-100 transition-opacity"
+            className="text-white opacity-80 hover:opacity-100 transition-opacity group"
           >
-            <ArrowDown size={32} className="filter drop-shadow-lg" />
+            <div className="p-3 rounded-full bg-white/10 backdrop-blur-sm group-hover:bg-white/20 transition-all duration-300">
+              <ArrowDown size={24} className="filter drop-shadow-lg" />
+            </div>
           </button>
         </div>
         
         {/* Индикатор слайдов */}
-        <div className="absolute bottom-8 flex space-x-3 left-1/2 -translate-x-1/2">
+        <div className="absolute bottom-8 flex space-x-3 left-1/2 -translate-x-1/2 z-20">
           {slides.map((_, index) => (
             <button
               key={index}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              className={`h-3 rounded-full transition-all duration-300 backdrop-blur-sm ${
                 currentSlide === index 
-                  ? 'bg-white w-8' 
-                  : 'bg-white/50 hover:bg-white/80'
+                  ? 'bg-gradient-to-r from-blue-400 to-purple-400 w-8' 
+                  : 'bg-white/30 hover:bg-white/50 w-3'
               }`}
               onClick={() => setCurrentSlide(index)}
               aria-label={`Go to slide ${index + 1}`}

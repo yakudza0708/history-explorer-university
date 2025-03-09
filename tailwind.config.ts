@@ -66,6 +66,21 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Добавление новых футуристичных цветов
+				neon: {
+					blue: '#4CFFEC',
+					purple: '#B026FF',
+					pink: '#FF26B0',
+					yellow: '#FFEC4C',
+					green: '#26FF91',
+				},
+				futuristic: {
+					dark: '#0A0A1B',
+					'dark-blue': '#0D1130',
+					'light-blue': '#E6FFFA',
+					'cyber-purple': '#6B46C1',
+					'cyber-pink': '#D53F8C',
 				}
 			},
 			borderRadius: {
@@ -137,6 +152,41 @@ export default {
 				'scroll-down': {
 					'0%, 100%': { transform: 'translateY(-20%)' },
 					'50%': { transform: 'translateY(20%)' }
+				},
+				'glow': {
+					'0%, 100%': { 
+						'box-shadow': '0 0 5px rgba(80, 200, 255, 0.3), 0 0 15px rgba(80, 200, 255, 0.3), 0 0 25px rgba(80, 200, 255, 0.3)'
+					},
+					'50%': { 
+						'box-shadow': '0 0 10px rgba(80, 200, 255, 0.5), 0 0 25px rgba(80, 200, 255, 0.5), 0 0 40px rgba(80, 200, 255, 0.5)'
+					}
+				},
+				'neon-pulse': {
+					'0%, 100%': { 
+						'box-shadow': '0 0 5px rgba(76, 255, 236, 0.7), 0 0 10px rgba(76, 255, 236, 0.5), 0 0 15px rgba(76, 255, 236, 0.3)'
+					},
+					'50%': { 
+						'box-shadow': '0 0 10px rgba(76, 255, 236, 0.9), 0 0 20px rgba(76, 255, 236, 0.7), 0 0 30px rgba(76, 255, 236, 0.5)'
+					}
+				},
+				'text-shimmer': {
+					'0%': { 
+						'background-position': '-100% 0'
+					},
+					'100%': { 
+						'background-position': '200% 0'
+					}
+				},
+				'cyberpunk-glitch': {
+					'0%, 100%': { 
+						'clip-path': 'polygon(0 0, 100% 0, 100% 100%, 0 100%)'
+					},
+					'5%, 95%': { 
+						'clip-path': 'polygon(0 5%, 100% 0, 100% 95%, 0 100%)'
+					},
+					'10%, 90%': { 
+						'clip-path': 'polygon(5% 0, 95% 5%, 100% 95%, 5% 95%)'
+					}
 				}
 			},
 			animation: {
@@ -156,6 +206,10 @@ export default {
 				'shimmer': 'shimmer 2s infinite linear',
 				'marquee': 'marquee 25s linear infinite',
 				'scroll-down': 'scroll-down 4s ease-in-out infinite',
+				'glow': 'glow 2s ease-in-out infinite',
+				'neon-pulse': 'neon-pulse 2s ease-in-out infinite',
+				'text-shimmer': 'text-shimmer 3s ease-in-out infinite',
+				'cyberpunk-glitch': 'cyberpunk-glitch 5s ease-in-out infinite',
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -163,6 +217,18 @@ export default {
 				'hero-pattern': 'url("/hero-pattern.svg")',
 				'grid-white': 'url("data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\' width=\'32\' height=\'32\' fill=\'none\' stroke=\'rgb(255 255 255 / 0.05)\'%3e%3cpath d=\'M0 .5H31.5V32\'/%3e%3c/svg%3e")',
 				'grid-black': 'url("data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\' width=\'32\' height=\'32\' fill=\'none\' stroke=\'rgb(0 0 0 / 0.05)\'%3e%3cpath d=\'M0 .5H31.5V32\'/%3e%3c/svg%3e")',
+				'futuristic-grid': 'linear-gradient(to right, rgba(76, 255, 236, 0.15) 1px, transparent 1px), linear-gradient(to bottom, rgba(76, 255, 236, 0.15) 1px, transparent 1px)',
+				'cyber-overlay': 'linear-gradient(120deg, rgba(10, 10, 27, 0.8) 0%, rgba(13, 17, 48, 0.7) 100%)',
+				'neon-lines': 'repeating-linear-gradient(90deg, rgba(76, 255, 236, 0.15) 0px, rgba(76, 255, 236, 0.15) 1px, transparent 1px, transparent 30px)',
+				'tech-dots': 'radial-gradient(circle, rgba(76, 255, 236, 0.2) 1px, transparent 1px)',
+				'tech-circuit': 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'%3E%3Cpath d=\'M10 10L90 10M10 10L10 90\' stroke=\'rgba(76, 255, 236, 0.15)\' stroke-width=\'1\' fill=\'none\'/%3E%3C/svg%3E")'
+			},
+			boxShadow: {
+				'neon-blue': '0 0 5px #4CFFEC, 0 0 10px #4CFFEC, 0 0 15px #4CFFEC',
+				'neon-purple': '0 0 5px #B026FF, 0 0 10px #B026FF, 0 0 15px #B026FF',
+				'neon-pink': '0 0 5px #FF26B0, 0 0 10px #FF26B0, 0 0 15px #FF26B0',
+				'glass': '0 8px 32px rgba(0, 0, 0, 0.1)',
+				'glass-dark': '0 8px 32px rgba(0, 0, 0, 0.3)'
 			}
 		}
 	},
