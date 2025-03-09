@@ -1,0 +1,68 @@
+
+.gradient-border {
+  position: relative;
+}
+
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.futuristic-border {
+  position: relative;
+  overflow: hidden;
+}
+
+.futuristic-border::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #4CFFEC, #B026FF, #FF26B0, #4CFFEC);
+  background-size: 400% 400%;
+  animation: gradient-x 3s ease infinite;
+  z-index: -1;
+  border-radius: inherit;
+}
+
+.animated-border {
+  position: relative;
+}
+
+.animated-border::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  border-radius: inherit;
+  background: linear-gradient(45deg, #4CFFEC, #B026FF, #FF26B0, #4CFFEC) border-box;
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: rotate-slow 5s linear infinite;
+}
+
+.tech-bg {
+  background-image: radial-gradient(circle at 30% 50%, rgba(76, 255, 236, 0.1) 0%, transparent 25%),
+                    radial-gradient(circle at 70% 30%, rgba(176, 38, 255, 0.1) 0%, transparent 25%);
+  background-size: 100% 100%;
+}
+
+.grid-pattern {
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, rgba(76, 255, 236, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(76, 255, 236, 0.05) 1px, transparent 1px);
+}

@@ -1,0 +1,37 @@
+
+.neon-text {
+  color: #fff;
+  text-shadow: 0 0 5px rgba(76, 255, 236, 0.7), 0 0 10px rgba(76, 255, 236, 0.5), 0 0 15px rgba(76, 255, 236, 0.3);
+}
+
+.neon-border {
+  border: 1px solid rgba(76, 255, 236, 0.7);
+  box-shadow: 0 0 5px rgba(76, 255, 236, 0.7), 0 0 10px rgba(76, 255, 236, 0.5), 0 0 15px rgba(76, 255, 236, 0.3);
+}
+
+.text-gradient-animation {
+  background: linear-gradient(to right, #4CFFEC, #B026FF, #FF26B0, #4CFFEC);
+  background-size: 300% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: text-shimmer 5s linear infinite;
+}
+
+.cyber-text {
+  background: linear-gradient(to right, #4CFFEC 0%, #B026FF 50%, #4CFFEC 100%);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-x 3s linear infinite;
+}
+
+@keyframes text-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
