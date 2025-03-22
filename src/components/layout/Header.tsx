@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, Home, Landmark, Users, FileImage, Sparkles } from 'lucide-react';
@@ -9,7 +8,6 @@ const Header = () => {
   const [activeLink, setActiveLink] = useState('/');
   const [animateHeader, setAnimateHeader] = useState(false);
 
-  // Отслеживание прокрутки страницы
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
@@ -19,7 +17,6 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Устанавливаем активную ссылку при загрузке страницы и добавляем анимацию
   useEffect(() => {
     setActiveLink(window.location.pathname);
     setAnimateHeader(true);
@@ -45,11 +42,10 @@ const Header = () => {
           <span className="relative inline-flex items-center">
             <Sparkles className={`w-5 h-5 mr-2 animate-pulse-slow ${scrolled ? 'text-primary' : 'text-white/80'}`} />
             <span className="gradient-text from-white to-white/80">University History</span>
-            <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary to-primary/60 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+            <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary to-primary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
           </span>
         </Link>
 
-        {/* Десктопная навигация */}
         <nav className="hidden md:flex items-center space-x-8">
           {[
             { path: '/', name: 'Главная', icon: <Home size={18} className="transition-all duration-300" /> },
@@ -79,15 +75,14 @@ const Header = () => {
               </span>
               <span className="relative overflow-hidden">
                 {item.name}
-                <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary to-primary/60 transform origin-left transition-transform duration-300 ${
-                  activeLink === item.path ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary to-primary/60 opacity-0 transform origin-left transition-transform duration-300 ${
+                  activeLink === item.path ? 'opacity-100' : 'group-hover:opacity-100'
                 }`}></span>
               </span>
             </Link>
           ))}
         </nav>
 
-        {/* Мобильное меню с использованием Sheet из shadcn/ui */}
         <Sheet>
           <SheetTrigger asChild>
             <button 
